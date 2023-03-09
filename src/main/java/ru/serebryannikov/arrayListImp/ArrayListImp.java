@@ -29,6 +29,7 @@ public class ArrayListImp<E> {
 
     /**
      * Создает пустой список с указанной начальной емкостью.
+     *
      * @param capacity - начальная емкость списка.
      */
     public ArrayListImp(int capacity) {
@@ -38,6 +39,7 @@ public class ArrayListImp<E> {
 
     /**
      * Возвращает элемент по индексу в этом списке.
+     *
      * @param index - индекс возвращаемого элемента.
      */
     public E get(int index) {
@@ -49,20 +51,44 @@ public class ArrayListImp<E> {
 
     /**
      * Добавляет указанный элемент в конец этого списка.
+     *
      * @param value - Элемент который требуется добавить.
      */
     public void add(E value) {
         if (count == capacity) {
-            E[] newArr = Arrays.copyOf(this.arr, this.capacity * 2);
-            this.capacity *= 2;
-            this.arr = newArr;
+            expandArray();
         }
         arr[count] = value;
         count++;
     }
 
     /**
+     * Добавляет указанный элемент в указанную позиции в этом списке.
+     *
+     * @param index - индекс, по которому указанный элемент должен быть добавлен.
+     * @param value - Элемент который требуется добавить.
+     */
+    public void add(int index, E value) {
+        if (index > count) {
+            throw new IndexOutOfBoundsException();
+        }
+        if (count == capacity) {
+            expandArray();
+        }
+        if (count == 0) {
+            add(value);
+        } else {
+            for (int i = count - 1; i >= index; i--) {
+                arr[i + 1] = arr[i];
+            }
+            arr[index] = value;
+            count++;
+        }
+    }
+
+    /**
      * Удаляет элемент в указанной позиции в этом списке. Сдвигает любые последующие элементы влево.
+     *
      * @param index - индекс элемента который требуется удалить.
      * @return возвращает элемент, который был удален из списка.
      */
@@ -86,6 +112,7 @@ public class ArrayListImp<E> {
 
     /**
      * Возвращает true, если этот список содержит указанный элемент.
+     *
      * @param value - элемент который требуется проверить
      */
     public boolean contains(E value) {
@@ -97,6 +124,7 @@ public class ArrayListImp<E> {
 
     /**
      * Заменяет элемент в указанной позиции в этом списке указанным элементом.
+     *
      * @param index - индекс возвращаемого элемента
      * @param value - элемент, который будет сохранен в указанной позиции
      */
@@ -121,5 +149,11 @@ public class ArrayListImp<E> {
             arr[i] = arr[i + 1];
             arr[i + 1] = temp;
         }
+    }
+
+    private void expandArray() {
+        E[] newArr = Arrays.copyOf(this.arr, this.capacity * 2);
+        this.capacity *= 2;
+        this.arr = newArr;
     }
 }

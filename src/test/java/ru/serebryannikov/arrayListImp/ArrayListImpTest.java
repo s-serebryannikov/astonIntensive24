@@ -28,6 +28,14 @@ public class ArrayListImpTest extends Assert {
     }
 
     @Test
+    public void addForIndex() {
+        arrayListImp.add(1,6);
+        int actual = arrayListImp.get(1);
+        assertEquals(4, arrayListImp.size());
+        assertEquals(6, actual);
+    }
+
+    @Test
     public void remove() {
         arrayListImp.remove(0);
         int actual1 = arrayListImp.get(0);
@@ -70,6 +78,4 @@ public class ArrayListImpTest extends Assert {
     public void getException() throws Exception {
         arrayListImp.get(4);
     }
-
-
 }
